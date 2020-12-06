@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:4.0
+    #command: --storageEngine=wiredTiger
+    restart: always
+    volumes:
+      - mongo-volume:/data/db
+    ports:
+      - 27017:27017
+  uplancebot:
+    container_name: uplancebot
+    image: uplancebot
+    build: .
+    restart: always
+    env_file: 
+      - bot.env
+    depends_on:
+      - mongo
+volumes:
+  mongo-volume:
